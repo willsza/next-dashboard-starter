@@ -10,7 +10,6 @@ export function Sidebar({ isOpen }: SidebarProps) {
   return (
     <aside
       className={`
-        fixed md:relative
         flex
         flex-col
         border-r 
@@ -18,7 +17,7 @@ export function Sidebar({ isOpen }: SidebarProps) {
         transition-all
         duration-300
         ease-in-out
-        h-full
+        h-[calc(100vh-64px)]
         z-40
         overflow-hidden
         ${isOpen ? "w-[280px] translate-x-0" : "w-0 -translate-x-full md:w-[64px] md:translate-x-0"}
