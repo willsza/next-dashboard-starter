@@ -1,5 +1,6 @@
 import { Logo } from "@/components/logo"
 import { MenuButton } from "@/components/menu-button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
 
@@ -10,7 +11,7 @@ interface HeaderProps {
 export function Header({ onMenuClick }: HeaderProps) {
   return (
     <header className="border-b bg-background w-full">
-      <div className="flex items-center justify-between h-16 px-4 md:px-8">
+      <div className="flex items-center justify-between h-16 px-4 md:px-7">
         <div className="flex items-center gap-2 md:gap-8">
           <MenuButton onClick={onMenuClick} />
           <Logo />
@@ -23,7 +24,10 @@ export function Header({ onMenuClick }: HeaderProps) {
               className="pl-8 w-[300px] bg-white"
             />
           </div>
-          <div className="h-8 w-8 rounded-full bg-slate-200 shrink-0" />
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
         </div>
       </div>
     </header>
