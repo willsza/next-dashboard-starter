@@ -1,7 +1,7 @@
 import { BarChart3, FileText, LayoutDashboard, Search, ShoppingCart } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/src/components/ui/button"
+import { Input } from "@/src/components/ui/input"
 
 interface SidebarProps {
   isOpen: boolean

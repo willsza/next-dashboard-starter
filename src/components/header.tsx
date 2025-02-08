@@ -1,9 +1,9 @@
 import { Search } from "lucide-react"
 
-import { Logo } from "@/components/logo"
-import { MenuButton } from "@/components/menu-button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Input } from "@/components/ui/input"
+import { Logo } from "@/src/components/logo"
+import { MenuButton } from "@/src/components/menu-button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/src/components/ui/avatar"
+import { Input } from "@/src/components/ui/input"
 
 interface HeaderProps {
   onMenuClick: () => void
