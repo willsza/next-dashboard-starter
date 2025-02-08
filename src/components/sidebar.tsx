@@ -33,19 +33,19 @@ export function Sidebar({ isOpen }: SidebarProps) {
           />
         </div>
         <nav className="space-y-2">
-          <Button variant="ghost" className={`w-full justify-start h-12 ${!isOpen && "px-2"}`}>
+          <Button variant="ghost" className={`w-full justify-start h-12 hover:text-primary ${!isOpen && "px-2"}`}>
             <LayoutDashboard className="!h-6 !w-6 shrink-0" />
             {isOpen && <span className="ml-4 text-base">Dashboard</span>}
           </Button>
-          <Button variant="ghost" className={`w-full justify-start h-12 ${!isOpen && "px-2"}`}>
+          <Button variant="ghost" className={`w-full justify-start h-12 hover:text-primary ${!isOpen && "px-2"}`}>
             <ShoppingCart className="!h-6 !w-6 shrink-0" />
             {isOpen && <span className="ml-4 text-base">Produtos</span>}
           </Button>
-          <Button variant="ghost" className={`w-full justify-start h-12 ${!isOpen && "px-2"}`}>
+          <Button variant="ghost" className={`w-full justify-start h-12 hover:text-primary ${!isOpen && "px-2"}`}>
             <BarChart3 className="!h-6 !w-6 shrink-0" />
             {isOpen && <span className="ml-4 text-base">Vendas</span>}
           </Button>
-          <Button variant="ghost" className={`w-full justify-start h-12 ${!isOpen && "px-2"}`}>
+          <Button variant="ghost" className={`w-full justify-start h-12 hover:text-primary ${!isOpen && "px-2"}`}>
             <FileText className="!h-6 !w-6 shrink-0" />
             {isOpen && <span className="ml-4 text-base">Relatórios</span>}
           </Button>
