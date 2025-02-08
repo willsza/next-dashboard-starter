@@ -19,8 +19,8 @@ export default function Home() {
         <Sidebar isOpen={isOpen} />
 
         <main className="flex-1 overflow-auto w-full bg-slate-50">
-          <div className="p-6 max-w-[1600px] mx-auto">
-            <h1 className="text-2xl font-semibold mb-4">Produtos</h1>
+          <div className="p-4 md:p-6 max-w-[1600px] mx-auto">
+            <h1 className="text-xl md:text-2xl font-semibold mb-4">Produtos</h1>
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               <Select defaultValue="todos">
                 <SelectTrigger className="w-full md:w-[200px] bg-white">
@@ -49,7 +49,7 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               <Card className="shadow-none border">
                 <CardHeader>
                   <CardTitle className="text-sm">Receita líquida total</CardTitle>
