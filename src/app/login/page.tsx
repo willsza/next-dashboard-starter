@@ -13,9 +13,16 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Implementar autenticação
+    
+    // Simula autenticação
+    document.cookie = "auth_token=dummy_token; path=/"
+    
+    // Força atualização do router
+    router.refresh()
+    
+    // Redireciona para o dashboard
     router.push('/')
   }
 
