@@ -24,15 +24,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table"
+import { UserDialog } from "./user-dialog"
+import { User } from "./columns"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  onDataChange?: (newData: TData[]) => void
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onDataChange,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -52,9 +56,15 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const handleUserCreated = (newUser: User) => {
+    if (onDataChange) {
+      onDataChange([...data, newUser] as TData[])
+    }
+  }
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="relative">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -68,6 +78,8 @@ export function DataTable<TData, TValue>({
             />
           </div>
         </div>
+
+        <UserDialog onUserCreated={handleUserCreated} />
       </div>
 
       <div className="rounded-md border bg-white">

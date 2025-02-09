@@ -1,59 +1,41 @@
 'use client'
 
-import { type User, columns } from "./columns"
+import { useState } from "react"
+import { columns, User } from "./columns"
 import { DataTable } from "./data-table"
 
-const users: User[] = [
+// Dados de exemplo
+const initialData: User[] = [
   {
-    id: "1",
+    id: "728ed52f",
     name: "João Silva",
-    email: "joao.silva@example.com",
-    role: "Admin",
+    email: "joao@exemplo.com",
+    role: "Desenvolvedor",
     status: "Ativo",
-    lastAccess: "2024-02-08",
+    lastAccess: "2024-01-23",
   },
   {
-    id: "2",
+    id: "489e1d42",
     name: "Maria Santos",
-    email: "maria.santos@example.com",
-    role: "Editor",
-    status: "Ativo",
-    lastAccess: "2024-02-07",
-  },
-  {
-    id: "3",
-    name: "Pedro Oliveira",
-    email: "pedro.oliveira@example.com",
-    role: "Usuário",
+    email: "maria@exemplo.com",
+    role: "Designer",
     status: "Inativo",
-    lastAccess: "2024-01-15",
-  },
-  {
-    id: "4",
-    name: "Ana Costa",
-    email: "ana.costa@example.com",
-    role: "Editor",
-    status: "Ativo",
-    lastAccess: "2024-02-08",
-  },
-  {
-    id: "5",
-    name: "Lucas Ferreira",
-    email: "lucas.ferreira@example.com",
-    role: "Usuário",
-    status: "Ativo",
-    lastAccess: "2024-02-06",
+    lastAccess: "2024-01-20",
   },
 ]
 
 export default function UsersPage() {
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl md:text-2xl font-semibold">Usuários</h1>
-      </div>
+  const [data, setData] = useState<User[]>(initialData)
 
-      <DataTable columns={columns} data={users} />
+  return (
+    <div className="p-6">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">Usuários</h1>
+        <p className="text-muted-foreground">
+          Gerencie os usuários do sistema
+        </p>
+      </div>
+      <DataTable columns={columns} data={data} onDataChange={setData} />
     </div>
   )
 }
