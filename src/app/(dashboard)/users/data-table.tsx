@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -13,6 +12,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import { Search } from "lucide-react"
+import { useState } from "react"
 
 import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
@@ -24,8 +24,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table"
-import { UserDialog } from "./user-dialog"
 import { User } from "./columns"
+import { UserDialog } from "./user-dialog"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -92,9 +92,9 @@ export function DataTable<TData, TValue>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 ))
               ))}

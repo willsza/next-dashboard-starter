@@ -1,7 +1,7 @@
 'use client'
 
+import { Plus } from "lucide-react"
 import { useState } from "react"
-import { User } from "./columns"
 
 import { Button } from "@/src/components/ui/button"
 import {
@@ -14,7 +14,9 @@ import {
   DialogTrigger,
 } from "@/src/components/ui/dialog"
 import { Input } from "@/src/components/ui/input"
-import { Plus } from "lucide-react"
+import { useToast } from "@/src/hooks/use-toast"
+import { User } from "./columns"
+
 
 interface UserDialogProps {
   onUserCreated: (user: User) => void
@@ -25,27 +27,53 @@ export function UserDialog({ onUserCreated }: UserDialogProps) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [role, setRole] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSubmitting(true)
 
-    // Simula criação de usuário
-    const newUser: User = {
-      id: Math.random().toString(36).substr(2, 9),
-      name,
-      email,
-      role,
-      status: "Ativo",
-      lastAccess: new Date().toISOString().split('T')[0],
+    try {
+      // Simula uma validação de email
+      if (!email.includes("@")) {
+        throw new Error("Email inválido")
+      }
+
+      // Simula uma chamada assíncrona
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
+      // Simula criação de usuário
+      const newUser: User = {
+        id: Math.random().toString(36).substr(2, 9),
+        name,
+        email,
+        role,
+        status: "Ativo",
+        lastAccess: new Date().toISOString().split('T')[0],
+      }
+
+      onUserCreated(newUser)
+      setOpen(false)
+
+      // Limpa o formulário
+      setName("")
+      setEmail("")
+      setRole("")
+
+      toast({
+        title: "Usuário criado",
+        description: "O usuário foi criado com sucesso!",
+      })
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Erro ao criar usuário",
+        description: error instanceof Error ? error.message : "Ocorreu um erro ao criar o usuário",
+      })
+    } finally {
+      setIsSubmitting(false)
     }
-
-    onUserCreated(newUser)
-    setOpen(false)
-
-    // Limpa o formulário
-    setName("")
-    setEmail("")
-    setRole("")
   }
 
   return (
@@ -75,6 +103,7 @@ export function UserDialog({ onUserCreated }: UserDialogProps) {
                 onChange={(e) => setName(e.target.value)}
                 className="bg-white"
                 required
+                disabled={isSubmitting}
               />
             </div>
             <div className="grid gap-2">
@@ -88,6 +117,7 @@ export function UserDialog({ onUserCreated }: UserDialogProps) {
                 onChange={(e) => setEmail(e.target.value)}
                 className="bg-white"
                 required
+                disabled={isSubmitting}
               />
             </div>
             <div className="grid gap-2">
@@ -100,14 +130,22 @@ export function UserDialog({ onUserCreated }: UserDialogProps) {
                 onChange={(e) => setRole(e.target.value)}
                 className="bg-white"
                 required
+                disabled={isSubmitting}
               />
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpen(false)}
+              disabled={isSubmitting}
+            >
               Cancelar
             </Button>
-            <Button type="submit">Salvar</Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Salvando..." : "Salvar"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
