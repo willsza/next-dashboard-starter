@@ -16,6 +16,7 @@ import { useState } from "react"
 
 import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
+import { Skeleton } from "@/src/components/ui/skeleton"
 import {
   Table,
   TableBody,
@@ -31,12 +32,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   onDataChange?: (newData: TData[]) => void
+  loading?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   onDataChange,
+  loading,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -86,22 +89,44 @@ export function DataTable<TData, TValue>({
         <Table>
           <TableHeader>
             <TableRow>
-              {table.getHeaderGroups().map((headerGroup) => (
-                headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                  </TableHead>
+              {loading ? (
+                <>
+                  {Array.from({ length: columns.length }).map((_, index) => (
+                    <TableHead key={index}>
+                      <Skeleton className="h-6 w-full" />
+                    </TableHead>
+                  ))}
+                </>
+              ) : (
+                table.getHeaderGroups().map((headerGroup) => (
+                  headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                    </TableHead>
+                  ))
                 ))
-              ))}
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              <>
+                {Array.from({ length: 5 }).map((_, rowIndex) => (
+                  <TableRow key={rowIndex}>
+                    {Array.from({ length: columns.length }).map((_, colIndex) => (
+                      <TableCell key={colIndex}>
+                        <Skeleton className="h-6 w-full" />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
