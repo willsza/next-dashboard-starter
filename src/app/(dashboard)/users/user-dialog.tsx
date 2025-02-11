@@ -5,6 +5,7 @@ import { Plus } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
+import { createUser } from "@/src/actions/user"
 import { Button } from "@/src/components/ui/button"
 import {
   Dialog,
@@ -27,7 +28,6 @@ import { Input } from "@/src/components/ui/input"
 import { useToast } from "@/src/hooks/use-toast"
 import { userFormSchema, UserFormValues } from "@/src/schemas/user.schema"
 import { User } from "./columns"
-import { supabase } from "@/src/lib/supabase"
 
 interface UserDialogProps {
   onUserCreated: (user: User) => void
@@ -48,31 +48,9 @@ export function UserDialog({ onUserCreated }: UserDialogProps) {
 
   const onSubmit = async (data: UserFormValues) => {
     try {
-      const { data: newUser, error } = await supabase
-        .from('users')
-        .insert([
-          {
-            name: data.name,
-            email: data.email,
-            role: data.role,
-            status: 'Ativo',
-            last_access: new Date().toISOString()
-          }
-        ])
-        .select()
-        .single()
+      const newUser = await createUser(data)
 
-      if (error) throw error
-
-      onUserCreated({
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        role: newUser.role,
-        status: newUser.status,
-        lastAccess: new Date(newUser.last_access).toISOString().split('T')[0]
-      })
-
+      onUserCreated(newUser)
       setOpen(false)
       form.reset()
 
