@@ -1,10 +1,9 @@
 'use client'
 
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Plus } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
 
 import { Button } from "@/src/components/ui/button"
 import {
@@ -16,9 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/src/components/ui/dialog"
-import { Input } from "@/src/components/ui/input"
-import { useToast } from "@/src/hooks/use-toast"
-import { User } from "./columns"
 import {
   Form,
   FormControl,
@@ -27,14 +23,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form"
-
-const userFormSchema = z.object({
-  name: z.string().min(1, "O nome é obrigatório"),
-  email: z.string().email("Email inválido"),
-  role: z.string().min(1, "O cargo é obrigatório"),
-})
-
-type UserFormValues = z.infer<typeof userFormSchema>
+import { Input } from "@/src/components/ui/input"
+import { useToast } from "@/src/hooks/use-toast"
+import { userFormSchema, UserFormValues } from "@/src/schemas/user.schema"
+import { User } from "./columns"
 
 interface UserDialogProps {
   onUserCreated: (user: User) => void
