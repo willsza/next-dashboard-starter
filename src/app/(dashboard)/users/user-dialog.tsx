@@ -26,8 +26,8 @@ import {
 } from "@/src/components/ui/form"
 import { Input } from "@/src/components/ui/input"
 import { useToast } from "@/src/hooks/use-toast"
+import { User } from "@/src/models"
 import { userFormSchema, UserFormValues } from "@/src/schemas/user.schema"
-import { User } from "./columns"
 
 interface UserDialogProps {
   onUserCreated: (user: User) => void

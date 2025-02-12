@@ -4,15 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/src/components/ui/button"
-
-export interface User {
-  id: string
-  name: string
-  email: string
-  role: string
-  status: string
-  lastAccess: string
-}
+import { User } from "@/src/models"
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -61,8 +53,8 @@ export const columns: ColumnDef<User>[] = [
       return (
         <span
           className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${status === "Ativo"
-              ? "bg-green-50 text-green-700"
-              : "bg-red-50 text-red-700"
+            ? "bg-green-50 text-green-700"
+            : "bg-red-50 text-red-700"
             }`}
         >
           {status}

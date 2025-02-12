@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import { columns, User } from "./columns"
-import { DataTable } from "./data-table"
 import { getUsers } from "@/src/actions/user"
 import { useToast } from "@/src/hooks/use-toast"
+import { User } from "@/src/models"
+import { useEffect, useState } from "react"
+import { columns } from "./columns"
+import { DataTable } from "./data-table"
 
 export default function UsersPage() {
   const [data, setData] = useState<User[]>([])

@@ -25,7 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table"
-import { User } from "./columns"
+import { User } from "@/src/models"
 import { UserDialog } from "./user-dialog"
 
 interface DataTableProps<TData, TValue> {
