@@ -1,35 +1,21 @@
 'use client'
 
-import { getUsers } from "@/src/actions/user"
-import { useToast } from "@/src/hooks/use-toast"
-import { User } from "@/src/models"
-import { useEffect, useState } from "react"
+import { useUsers } from "@/src/hooks/use-users"
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 
 export default function UsersPage() {
-  const [data, setData] = useState<User[]>([])
-  const [loading, setLoading] = useState(true)
-  const { toast } = useToast()
+  const { data = [], isLoading, error } = useUsers()
 
-  useEffect(() => {
-    async function loadUsers() {
-      try {
-        const users = await getUsers()
-        setData(users)
-      } catch (error) {
-        toast({
-          variant: "destructive",
-          title: "Erro ao carregar usuários",
-          description: error instanceof Error ? error.message : "Ocorreu um erro ao carregar os usuários",
-        })
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadUsers()
-  }, [toast])
+  if (error) {
+    return (
+      <div className="p-6">
+        <div className="text-red-500">
+          Erro ao carregar usuários: {error instanceof Error ? error.message : 'Erro desconhecido'}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="p-6">
@@ -39,7 +25,7 @@ export default function UsersPage() {
           Gerencie os usuários do sistema
         </p>
       </div>
-      <DataTable columns={columns} data={data} onDataChange={setData} loading={loading} />
+      <DataTable columns={columns} data={data} loading={isLoading} />
     </div>
   )
 }
