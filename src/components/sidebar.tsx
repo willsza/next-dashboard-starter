@@ -48,10 +48,10 @@ export function Sidebar({ isOpen }: SidebarProps) {
             <BarChart3 className="!h-6 !w-6 shrink-0" />
             {isOpen && <span className="ml-4 text-base">Vendas</span>}
           </Button>
-          <Link href="/users" className="block">
+          <Link href="/clients" className="block">
             <Button variant="ghost" className={`w-full justify-start h-12 hover:text-primary ${!isOpen && "px-2"}`}>
               <Users className="!h-6 !w-6 shrink-0" />
-              {isOpen && <span className="ml-4 text-base">Usuários</span>}
+              {isOpen && <span className="ml-4 text-base">Clientes</span>}
             </Button>
           </Link>
           <Button variant="ghost" className={`w-full justify-start h-12 hover:text-primary ${!isOpen && "px-2"}`}>

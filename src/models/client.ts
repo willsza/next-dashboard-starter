@@ -1,4 +1,4 @@
-export type User = {
+export type Client = {
   name: string;
   email: string;
   role: string;

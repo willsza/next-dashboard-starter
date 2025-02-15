@@ -25,8 +25,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table"
-import { User } from "@/src/models"
-import { UserDialog } from "./user-dialog"
+import { Client } from "@/src/models"
+import { ClientDialog } from "./client-dialog"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -59,9 +59,9 @@ export function DataTable<TData, TValue>({
     },
   })
 
-  const handleUserCreated = (newUser: User) => {
+  const handleClientCreated = (newClient: Client) => {
     if (onDataChange) {
-      onDataChange([...data, newUser] as TData[])
+      onDataChange([...data, newClient] as TData[])
     }
   }
 
@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
           <div className="relative">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Filtrar usuários..."
+              placeholder="Filtrar clientes..."
               value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
               onChange={(event) =>
                 table.getColumn("name")?.setFilterValue(event.target.value)
@@ -82,7 +82,7 @@ export function DataTable<TData, TValue>({
           </div>
         </div>
 
-        <UserDialog onUserCreated={handleUserCreated} />
+        <ClientDialog onClientCreated={handleClientCreated} />
       </div>
 
       <div className="rounded-md border bg-white">

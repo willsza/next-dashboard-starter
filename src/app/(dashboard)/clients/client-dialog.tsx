@@ -5,7 +5,7 @@ import { Plus } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-import { createUser } from "@/src/actions/user"
+import { addClient } from "@/src/actions/client"
 import { Button } from "@/src/components/ui/button"
 import {
   Dialog,
@@ -26,19 +26,19 @@ import {
 } from "@/src/components/ui/form"
 import { Input } from "@/src/components/ui/input"
 import { useToast } from "@/src/hooks/use-toast"
-import { User } from "@/src/models"
-import { userFormSchema, UserFormValues } from "@/src/schemas/user.schema"
+import { Client } from "@/src/models"
+import { clientFormSchema, ClientFormValues } from "@/src/schemas/client.schema"
 
-interface UserDialogProps {
-  onUserCreated: (user: User) => void
+interface ClientDialogProps {
+  onClientCreated: (client: Client) => void
 }
 
-export function UserDialog({ onUserCreated }: UserDialogProps) {
+export function ClientDialog({ onClientCreated }: ClientDialogProps) {
   const [open, setOpen] = useState(false)
   const { toast } = useToast()
 
-  const form = useForm<UserFormValues>({
-    resolver: zodResolver(userFormSchema),
+  const form = useForm<ClientFormValues>({
+    resolver: zodResolver(clientFormSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -46,23 +46,23 @@ export function UserDialog({ onUserCreated }: UserDialogProps) {
     },
   })
 
-  const onSubmit = async (data: UserFormValues) => {
+  const onSubmit = async (data: ClientFormValues) => {
     try {
-      const newUser = await createUser(data)
+      const newClient = await addClient(data)
 
-      onUserCreated(newUser)
+      onClientCreated(newClient)
       setOpen(false)
       form.reset()
 
       toast({
-        title: "Usuário criado",
-        description: "O usuário foi criado com sucesso!",
+        title: "Cliente adicionado",
+        description: "O cliente foi adicionado com sucesso!",
       })
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Erro ao criar usuário",
-        description: error instanceof Error ? error.message : "Ocorreu um erro ao criar o usuário",
+        title: "Erro ao adicionar cliente",
+        description: error instanceof Error ? error.message : "Ocorreu um erro ao adicionar o cliente",
       })
     }
   }
@@ -72,16 +72,16 @@ export function UserDialog({ onUserCreated }: UserDialogProps) {
       <DialogTrigger asChild>
         <Button>
           <Plus className="h-4 w-4 mr-2" />
-          Novo usuário
+          Novo cliente
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Novo usuário</DialogTitle>
+              <DialogTitle>Novo cliente</DialogTitle>
               <DialogDescription>
-                Preencha os dados abaixo para criar um novo usuário.
+                Preencha os dados abaixo para criar um novo cliente.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -127,7 +127,7 @@ export function UserDialog({ onUserCreated }: UserDialogProps) {
             </div>
             <DialogFooter>
               <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? "Criando..." : "Criar usuário"}
+                {form.formState.isSubmitting ? "Criando..." : "Adicionar cliente"}
               </Button>
             </DialogFooter>
           </form>
