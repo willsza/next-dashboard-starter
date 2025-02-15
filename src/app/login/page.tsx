@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Eye, EyeOff } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 
+import { login } from "@/src/actions/login"
 import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
 
@@ -11,20 +12,6 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const router = useRouter()
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // Simula autenticação
-    document.cookie = "auth_token=dummy_token; path=/"
-    
-    // Força atualização do router
-    router.refresh()
-    
-    // Redireciona para o dashboard
-    router.push('/')
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -38,7 +25,7 @@ export default function LoginPage() {
             Entre com suas credenciais para acessar o painel
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md">
             <div>
               <label htmlFor="email" className="sr-only">
@@ -50,10 +37,10 @@ export default function LoginPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="bg-white"
-                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="appearance-none relative block w-full"
+                placeholder="Email"
               />
             </div>
             <div className="relative">
@@ -66,42 +53,44 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
-                className="bg-white"
-                placeholder="Senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="appearance-none relative block w-full"
+                placeholder="Senha"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
               >
                 {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
+                  <EyeOff className="h-5 w-5" />
                 ) : (
-                  <Eye className="h-4 w-4" />
+                  <Eye className="h-5 w-5" />
                 )}
               </button>
             </div>
           </div>
 
-          <div>
-            <Button type="submit" className="w-full">
-              Entrar
+          <div className="flex flex-col gap-4">
+            <Button
+              type="submit"
+              className="w-full"
+              formAction={login}
+            >
+              {"Entrar"}
             </Button>
+
+            <div className="text-center">
+              <Link
+                href="/reset-password"
+                className="text-sm font-medium text-primary hover:text-primary/90"
+              >
+                Esqueceu sua senha?
+              </Link>
+            </div>
           </div>
         </form>
-
-        <div className="flex items-center justify-center">
-          <div className="text-sm">
-            <a
-              href="#"
-              className="font-medium text-primary hover:text-primary/90"
-            >
-              Esqueceu sua senha?
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   )

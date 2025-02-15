@@ -2,8 +2,8 @@ import { Search } from "lucide-react"
 
 import { Logo } from "@/src/components/logo"
 import { MenuButton } from "@/src/components/menu-button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/src/components/ui/avatar"
 import { Input } from "@/src/components/ui/input"
+import { UserMenu } from "@/src/components/user-menu"
 
 interface HeaderProps {
   onMenuClick: () => void
@@ -25,10 +25,7 @@ export function Header({ onMenuClick }: HeaderProps) {
               className="pl-8 w-[300px] bg-white"
             />
           </div>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <UserMenu />
         </div>
       </div>
     </header>
