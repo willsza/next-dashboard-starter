@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Eye, EyeOff } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
+import { updatePassword } from "@/src/actions/user"
 import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
 import { useToast } from "@/src/hooks/use-toast"
-import { supabase } from "@/src/lib/supabase"
 
 export default function UpdatePasswordPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -19,15 +19,9 @@ export default function UpdatePasswordPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    
-    try {
-      const { error } = await supabase.auth.updateUser({
-        password: password,
-      })
 
-      if (error) {
-        throw error
-      }
+    try {
+      await updatePassword(password)
 
       toast({
         title: "Senha atualizada",

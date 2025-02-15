@@ -1,8 +1,8 @@
 'use client'
 
 import { LogOut } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 
+import { signOut } from '@/src/actions/login'
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar'
 import {
   DropdownMenu,
@@ -11,22 +11,22 @@ import {
   DropdownMenuTrigger,
 } from '@/src/components/ui/dropdown-menu'
 import { useToast } from '@/src/hooks/use-toast'
-import { supabase } from '@/src/lib/supabase'
 
 export function UserMenu() {
-  const router = useRouter()
   const { toast } = useToast()
 
   async function handleLogout() {
     try {
-      await supabase.auth.signOut()
-      router.push('/login')
+      await signOut()
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Erro ao fazer logout',
-        description: error instanceof Error ? error.message : 'Ocorreu um erro ao fazer logout',
-      })
+      // Ignora o erro de redirecionamento do Next.js
+      if (!(error instanceof Error) || !error.message.includes('NEXT_REDIRECT')) {
+        toast({
+          variant: 'destructive',
+          title: 'Erro ao fazer logout',
+          description: error instanceof Error ? error.message : 'Ocorreu um erro ao fazer logout',
+        })
+      }
     }
   }
 

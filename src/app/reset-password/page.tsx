@@ -1,38 +1,36 @@
 'use client'
 
-import { useState } from "react"
-import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
+import { resetPassword } from "@/src/actions/user"
 import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
 import { useToast } from "@/src/hooks/use-toast"
-import { supabase } from "@/src/lib/supabase"
 
 export default function ResetPasswordPage() {
   const [email, setEmail] = useState("")
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const { toast } = useToast()
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    
+
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/update-password`,
-      })
-
-      if (error) {
-        throw error
-      }
-
+      await resetPassword(email)
       setSubmitted(true)
+
       toast({
         title: "Email enviado",
         description: "Verifique sua caixa de entrada para redefinir sua senha",
       })
+
+      router.push('/login')
     } catch (error) {
       toast({
         variant: "destructive",

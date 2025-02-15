@@ -60,3 +60,31 @@ export async function getUsers(): Promise<User[]> {
     throw error;
   }
 }
+
+export async function resetPassword(email: string) {
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/update-password`,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updatePassword(password: string) {
+  try {
+    const { error } = await supabase.auth.updateUser({
+      password: password,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  } catch (error) {
+    throw error;
+  }
+}
