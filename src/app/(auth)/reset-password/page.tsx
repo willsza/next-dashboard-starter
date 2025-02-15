@@ -1,44 +1,14 @@
 'use client'
 
 import { Eye, EyeOff } from "lucide-react"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-import { updatePassword } from "@/src/actions/user"
+import { resetPasswordAction } from "@/src/actions/auth"
 import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
-import { useToast } from "@/src/hooks/use-toast"
 
-export default function UpdatePasswordPage() {
+export default function ResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
-  const { toast } = useToast()
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-
-    try {
-      await updatePassword(password)
-
-      toast({
-        title: "Senha atualizada",
-        description: "Sua senha foi atualizada com sucesso",
-      })
-
-      router.push('/login')
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erro ao atualizar senha",
-        description: error instanceof Error ? error.message : "Ocorreu um erro ao atualizar sua senha",
-      })
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -53,7 +23,7 @@ export default function UpdatePasswordPage() {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6">
           <div className="relative">
             <label htmlFor="password" className="sr-only">
               Nova senha
@@ -63,8 +33,6 @@ export default function UpdatePasswordPage() {
               name="password"
               type={showPassword ? "text" : "password"}
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               className="appearance-none relative block w-full"
               placeholder="Nova senha"
               minLength={6}
@@ -82,12 +50,33 @@ export default function UpdatePasswordPage() {
             </button>
           </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={loading}
-          >
-            {loading ? "Atualizando..." : "Atualizar senha"}
+          <div className="relative">
+            <label htmlFor="confirmPassword" className="sr-only">
+              Confirmar senha
+            </label>
+            <Input
+              id="confirmPassword"
+              name="confirmPassword"
+              type={showPassword ? "text" : "password"}
+              required
+              className="appearance-none relative block w-full"
+              placeholder="Confirmar senha"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
+            >
+              {showPassword ? (
+                <EyeOff className="h-5 w-5" />
+              ) : (
+                <Eye className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+
+          <Button type="submit" className="w-full" formAction={resetPasswordAction}>
+            Atualizar senha
           </Button>
         </form>
       </div>

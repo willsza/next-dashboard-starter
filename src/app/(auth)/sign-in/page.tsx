@@ -4,14 +4,12 @@ import { Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
-import { login } from "@/src/actions/login"
+import { signInAction } from "@/src/actions/auth"
 import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -37,8 +35,6 @@ export default function LoginPage() {
                 type="email"
                 autoComplete="email"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 className="appearance-none relative block w-full"
                 placeholder="Email"
               />
@@ -53,8 +49,6 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 className="appearance-none relative block w-full"
                 placeholder="Senha"
               />
@@ -76,14 +70,14 @@ export default function LoginPage() {
             <Button
               type="submit"
               className="w-full"
-              formAction={login}
+              formAction={signInAction}
             >
-              {"Entrar"}
+              Entrar
             </Button>
 
             <div className="text-center">
               <Link
-                href="/reset-password"
+                href="/forgot-password"
                 className="text-sm font-medium text-primary hover:text-primary/90"
               >
                 Esqueceu sua senha?
