@@ -4,9 +4,9 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/src/components/ui/button"
-import { User } from "@/src/models"
+import { Client } from "@/src/models"
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
