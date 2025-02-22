@@ -26,7 +26,7 @@ import {
   TableRow,
 } from "@/src/components/ui/table"
 import { Client } from "@/src/models"
-import { ClientDialog } from "./client-dialog"
+import { ClientDialog } from "../client-dialog/client-dialog"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
