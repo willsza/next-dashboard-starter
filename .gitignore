@@ -43,5 +43,4 @@ next-env.d.ts
 # supabase
 /supabase/.temp
 /supabase/.branches
-/supabase/seed.sql
 .env*.local
